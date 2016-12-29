@@ -6,39 +6,32 @@ var data,
 
 function pullDownAction() {
     var dataList = $('#news-lists .item');
+    //本地测试，为了看到加载中效果故加上定时器
+    setTimeout(function() {
+        $('#news-lists').empty();
+        $('#news-lists').append(dataList);
+        myScroll.refresh();
+    }, 1000);
     $.getJSON('/allData.json', function(data, state) {
         if (data && data.state == 1 && state == 'success') {
             dataList = data;
         }
-        //本地测试，为了看到加载中效果故加上定时器
-        setTimeout(function() {
-            $('#news-lists').empty();
-            $('#news-lists').append(dataList);
-            myScroll.refresh();
-        }, 600);
-    }, function() {
-        //本地测试，为了看到加载中效果故加上定时器
-        setTimeout(function() {
-            $('#news-lists').empty();
-            $('#news-lists').append(dataList);
-            myScroll.refresh();
-        }, 600);
     });
 }
 
 function pullUpAction() {
+    var dataList = ['<div class="item">下拉' + ($('#news-lists .item').length + 1) + '</div>'];
+    //本地测试，为了看到加载中效果故加上定时器
+    setTimeout(function() {
+        for (var i in dataList) {
+            $('#news-lists').append(dataList[i]);
+        }
+        myScroll.refresh();
+    }, 1000);
     $.getJSON('/nextPage.json', function(data, state) {
-        var dataList = ['<div class="item">下拉' + ($('#news-lists .item').length + 1) + '</div>'];
         if (data && data.state == 1 && state == 'success') {
             dataList = data;
         }
-        //本地测试，为了看到加载中效果故加上定时器
-        setTimeout(function() {
-            for (var i in dataList) {
-                $('#news-lists').append(dataList[i]);
-            }
-            myScroll.refresh();
-        }, 600);
     });
 }
 
