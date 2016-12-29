@@ -5,11 +5,18 @@ var data,
     generatedCount = 0;
 
 function pullDownAction() {
+    var dataList = $('#news-lists .item');
     $.getJSON('/allData.json', function(data, state) {
-        var dataList = $('#news-lists .item');
         if (data && data.state == 1 && state == 'success') {
             dataList = data;
         }
+        //本地测试，为了看到加载中效果故加上定时器
+        setTimeout(function() {
+            $('#news-lists').empty();
+            $('#news-lists').append(dataList);
+            myScroll.refresh();
+        }, 600);
+    }, function() {
         //本地测试，为了看到加载中效果故加上定时器
         setTimeout(function() {
             $('#news-lists').empty();
